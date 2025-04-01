@@ -1,0 +1,64 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration-form</title>
+    <style>
+        .mensaje-error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <label for="usuario">Nombre de usuario:</label>
+    <input type="text" id="usuario">
+    <span id="errorUsuario" class="mensaje-error"></span>
+    <br>
+    <label for="nombre">Nombre:</label>
+    <input type="text" name="" id="nombre">
+    <span id="errorNombre" class="mensaje-error"></span>
+    <br>
+    <label for="apellidos">Apellidos:</label>
+    <input type="text" name="" id="apellidos">
+    <br>
+    <label for="email">Email:</label>
+    <input type="text" name="" id="email">
+    <br>
+    <label for="telefono">Telefono:</label>
+    <input type="text" name="" id="telefono">
+    <br>
+    <label for="password1">Contraseña:</label>
+    <input type="password" name="" id="password1">
+    <br>
+    <label for="password2">Repite la contraseña:</label>
+    <input type="password" name="" id="password2">
+    <br>
+    <input type="button" value="Registrar" onClick="validar()">
+
+    <script>
+
+        function validar() {
+            let usuario = document.getElementById("usuario").value;
+            let nombre = document.getElementById("nombre").value;
+            if (usuario.length <= 2) {
+               document.getElementById("errorUsuario").innerHTML = "Usuario debe ser más largo";
+            } else {
+                document.getElementById("errorUsuario").innerHTML = "";
+            }
+            if (nombre.length <= 2) {
+               document.getElementById("errorNombre").innerHTML = "Debe ser un nombre real";
+            } else {
+                document.getElementById("errorNombre").innerHTML = "";
+            }
+            
+            
+        }
+
+    </script>
+</body>
+
+</html>

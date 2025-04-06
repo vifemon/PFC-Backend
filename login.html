@@ -1,43 +1,52 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <form action="" id="loginForm">
-    Usuario:<input type="text" id="usuario">
-    Password:<input type="password" id="password">
-    <input type="button" value="login" onclick="tryLogin()">
+        Usuario:<input type="text" id="usuario">
+        Password:<input type="password" id="password">
+        <input type="button" value="login" onclick="tryLogin()">
     </form>
-    <span id="login-messaje"></span>
-    <input type="button" onclick="location.href='registration-form.html'" value="Registrate">
-    
-<script>
+    <span id="login-mensaje"></span>
+    <input type="button" onclick="location.href='registro-form.html'" value="Registrate">
 
-    function tryLogin(){
-    let usuario = document.getElementById("usuario").value
-    let password = document.getElementById("password").value
-    
-    let peticio_http = new XMLHttpRequest();
-    peticio_http.open('POST', 'login-validate.php', true);
-    peticio_http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    peticio_http.send('usuario='+usuario+'&password='+password);
-    peticio_http.onreadystatechange = function (){
-        if(peticio_http.readyState == 4) {
-            if(peticio_http.status == 200) {
-                console.log(peticio_http.responseText);
-                let response = JSON.parse(peticio_http.responseText)
-                if (response.status = "success"){
-                    document.getElementById("login-messaje").innerHTML = "Welcome " + usuario;
+    <script>
+
+        function tryLogin() {
+            let usuario = document.getElementById("usuario").value
+            let password = document.getElementById("password").value
+
+
+            let peticio_http = new XMLHttpRequest();
+            peticio_http.open('POST', 'login-validacion.php', true);
+            peticio_http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            peticio_http.send('usuario=' + usuario + '&password=' + password);
+            peticio_http.onreadystatechange = function () {
+                if (peticio_http.readyState == 4) {
+                    if (peticio_http.status == 200) {
+                        console.log(peticio_http.responseText);
+                        let response = JSON.parse(peticio_http.responseText)
+                        if (response.status === "success") {
+                            document.getElementById("login-mensaje").innerHTML = "Welcome " + usuario;
+                            setTimeout(() => {
+                                alert("go to profile")
+                            }, 3000)
+                        }
+
+                    }
                 }
-              
+
             }
         }
 
-    }
-}
 
-</script>
+
+    </script>
 </body>
+
 </html>

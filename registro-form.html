@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration-form</title>
+    <title>Registro-form</title>
     <style>
         .mensaje-error {
             color: red;
@@ -46,7 +46,7 @@
     <br>
     <input type="button" value="Registrar" onClick="validar()">
     <div id="reg-success" class="reg-success">
-        <span id="registration-messaje"></span>
+        <span id="registro-mensaje"></span>
         <input type="button" onclick="location.href='login.html'" value="Ve a Login">
     </div>
 
@@ -105,13 +105,10 @@
             }
 
             if (isValid) {
-                //preparar petición ajax con todos los valores a enviar.
-                //Si todo es ok, devolver mensaje ok y botón de ir a login
-
-
+              
 
                 let peticio_http = new XMLHttpRequest();
-                peticio_http.open('POST', 'registration-insert.php', true);
+                peticio_http.open('POST', 'registro-insert.php', true);
                 peticio_http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 peticio_http.send('usuario=' + usuario+'&nombre='+nombre+'&apellidos='+apellidos+'&email='+email+'&telefono='+telefono+'&password='+password1);
                 peticio_http.onreadystatechange = function () {
@@ -120,7 +117,7 @@
                             console.log(peticio_http.responseText)
                             let response = JSON.parse(peticio_http.responseText)
                             if (response.status = "success"){
-                            document.getElementById("registration-messaje").innerHTML = "Registro correcto";
+                            document.getElementById("registro-mensaje").innerHTML = "Registro correcto";
                             }
                             document.getElementById("reg-success").style.display = "block";
 

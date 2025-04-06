@@ -1,0 +1,70 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservas</title>
+    <style>
+        .mostrar-salas {
+            visibility: hidden;
+        }
+
+        .mostrar-sillas {
+            visibility: hidden;
+        }
+    </style>
+</head>
+
+<body>
+
+    <select name="tipo-reserva" id="tipo-reserva">
+        <option value="-1">Selecciona un tipo de reserva</option>
+        <option value="sala">Sala</option>
+        <option value="sillas">Sillas</option>
+    </select>
+    <div id="mostrar-sala" class="mostrar-salas">
+        <select name="nombre-sala" id="nombre-sala">
+            <option value="-1">Selecciona una sala</option>
+            <option value="">Sala 1</option>
+            <option value="">Sala 2</option>
+        </select>
+        <input type="date">
+        Hora inicio<input type="time">
+        Hora fin<input type="time">
+    </div>
+    <div id="mostrar-sillas" class="mostrar-sillas">
+        <input type="date">
+        <select name="" id="">
+            <option value="-1">Selecciona número de sillas</option>
+            <option value="">1</option>
+            <option value="">2</option>
+            <option value="">3</option>
+            <option value="">4</option>
+            <option value="">5</option>
+            <option value="">6</option>
+        </select>
+        Hora inicio<input type="time">
+        Hora fin<input type="time">
+    </div>
+
+
+    <script>
+        
+
+        document.getElementById("tipo-reserva").addEventListener('change', function(){
+            if (this.value === "sala"){
+                document.getElementById("mostrar-sala").style.visibility = "visible";
+                document.getElementById("mostrar-sillas").style.visibility= "hidden";
+            } else if (this.value === "sillas"){
+                document.getElementById("mostrar-sala").style.visibility = "hidden";
+                document.getElementById("mostrar-sillas").style.visibility= "visible";
+            } else {
+                document.getElementById("mostrar-sala").style.visibility = "hidden";
+                document.getElementById("mostrar-sillas").style.visibility= "hidden";
+            }
+        })
+
+    </script>
+</body>
+
+</html>

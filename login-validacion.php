@@ -1,6 +1,9 @@
 <?php
 session_start();
 header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Methods: POST");
 
 $servername = "localhost";
 $username = "root";
@@ -22,7 +25,7 @@ $usuario = $_POST['usuario'];
 $password = $_POST['password'];
 
 
-$sql = "SELECT password FROM usuarios WHERE usuario=?";
+$sql = "SELECT * FROM usuarios WHERE usuario=?";
 $stmt = $con->prepare($sql);
 if ($stmt === false) {
     die("Error al preparar la consulta: " . $con->error);
@@ -34,7 +37,7 @@ $result = $stmt->get_result();
 if ($row = $result->fetch_assoc()) {
     if ($password === $row['password'])  {
         $_SESSION['usuario'] = $usuario;
-        echo json_encode(["status" => "success", "mensaje" => "Login exitoso"]);
+        echo json_encode(["status" => "success", "mensaje" => "Login exitoso", "user_id" => $row['id']]);
     } else {
         echo json_encode(["status" => "error", "mensaje" => "Contraseña incorrecta"]);
     }

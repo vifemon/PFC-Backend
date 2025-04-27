@@ -1,4 +1,8 @@
 <?php
+header('Access-Control-Allow-Origin: *'); 
+header('Access-Control-Allow-Headers: *');
+header('Content-Type: application/json');
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -37,7 +41,7 @@ if ($stmt === false) {
 
 $stmt->bind_param("issssss", $id, $usuario, $nombre, $apellidos, $email, $telefono, $password );
 $stmt->execute();
- echo json_encode(["status" => "succes", "mensaje" => "Registro completado"]);
+ echo json_encode(["status" => "success", "mensaje" => "Registro completado"]);
 
 $con->close();
 ?>

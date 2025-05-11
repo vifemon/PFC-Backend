@@ -31,6 +31,7 @@ $apellidos = $_POST['apellidos'];
 $email = $_POST['email'];
 $telefono = $_POST['telefono'];
 $password = $_POST['password'];
+$strongpass = password_hash($password, PASSWORD_DEFAULT);
 
 
 $sql = "INSERT INTO usuarios VALUES (?,?,?,?,?,?,?)";
@@ -39,7 +40,7 @@ if ($stmt === false) {
     die("Error al preparar la consulta: " . $con->error);
 }
 
-$stmt->bind_param("issssss", $id, $usuario, $nombre, $apellidos, $email, $telefono, $password );
+$stmt->bind_param("issssss", $id, $usuario, $nombre, $apellidos, $email, $telefono, $strongpass );
 $stmt->execute();
  echo json_encode(["status" => "success", "mensaje" => "Registro completado"]);
 

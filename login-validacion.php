@@ -1,5 +1,4 @@
 <?php
-session_start();
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
@@ -35,8 +34,7 @@ $stmt->bind_param("s", $usuario);
 $stmt->execute();
 $result = $stmt->get_result();
 if ($row = $result->fetch_assoc()) {
-    if ($password === $row['password'])  {
-        $_SESSION['usuario'] = $usuario;
+    if (password_verify($password, $row['password']))  {
         echo json_encode(["status" => "success", "mensaje" => "Login exitoso", "user_id" => $row['id']]);
     } else {
         echo json_encode(["status" => "error", "mensaje" => "Contraseña incorrecta"]);

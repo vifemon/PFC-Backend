@@ -22,15 +22,51 @@ if ($conn->connect_error) {
 $usuario_id = $_POST['usuario_id'] ?? null;
 $fecha = $_POST['fecha'] ?? null;
 $reservas_json = $_POST['reservas'] ?? null;
+$reservaTodoElDia_json = $_POST['reservaTodoElDia'] ?? null;
 
 
-if (!$usuario_id || !$fecha || !$reservas_json) {
+if (!$usuario_id || !$fecha) {
     http_response_code(400);
     echo json_encode(["error" => "Faltan datos necesarios."]);
     exit;
 }
 
+if ($reservaTodoElDia_json) {
+    $reservaTodo = json_decode($reservaTodoElDia_json, true);
 
+    if (
+        !$reservaTodo ||
+        !isset($reservaTodo['hora_inicio'], $reservaTodo['hora_fin'], $reservaTodo['cantidad_sillas'])
+    ) {
+        http_response_code(400);
+        echo json_encode(["error" => "Formato de reservaTodoElDia inválido."]);
+        exit;
+    }
+
+    $hora_inicio = $reservaTodo['hora_inicio'];
+    $hora_fin = $reservaTodo['hora_fin'];
+    $cantidad_sillas = $reservaTodo['cantidad_sillas'];
+
+    $stmt = $conn->prepare("INSERT INTO reservas (usuario_id, fecha, hora_inicio, hora_fin, cantidad_sillas) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("isssi", $usuario_id, $fecha, $hora_inicio, $hora_fin, $cantidad_sillas);
+
+    if (!$stmt->execute()) {
+        http_response_code(500);
+        echo json_encode(["error" => "Error al guardar la reserva: " . $stmt->error]);
+        $stmt->close();
+        $conn->close();
+        exit;
+    }
+
+    $stmt->close();
+
+    $conn->close();
+    echo json_encode(["success" => true, "mensaje" => "Reserva de día completo registrada correctamente."]);
+    exit;
+}
+
+
+if ($reservas_json) {
 $reservas = json_decode($reservas_json, true);
 
 if (!$reservas || !is_array($reservas)) {
@@ -104,8 +140,12 @@ foreach ($agrupadas as $cantidad_sillas => $horas) {
     }
 }
 
+    $conn->close();
+    echo json_encode(["success" => true, "mensaje" => "Reservas registradas correctamente."]);
+    exit;
+}
 
-$conn->close();
 
-echo json_encode(["success" => true, "mensaje" => "Reservas registradas correctamente."]);
+http_response_code(400);
+echo json_encode(["error" => "No se recibió ninguna reserva válida."]);
 ?>

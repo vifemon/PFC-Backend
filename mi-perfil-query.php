@@ -25,13 +25,15 @@ if (!$usuario_id) {
 if ($usuario_id == 1){
 
     $stmt_admin = $conn->prepare("SELECT 
-    id,
-    usuario_id,
-    DATE_FORMAT(fecha, '%d-%m-%Y') AS fecha_format,
-    DATE_FORMAT(hora_inicio, '%H:%i') AS hora_inicio_format,
-    DATE_FORMAT(hora_fin, '%H:%i') AS hora_fin_format,
-    cantidad_sillas, sala_id
-FROM reservas");
+    reservas.id,
+    CONCAT(usuarios.nombre, ' ', usuarios.apellidos) AS nombre_completo,
+    DATE_FORMAT(reservas.fecha, '%d-%m-%Y') AS fecha_format,
+    DATE_FORMAT(reservas.hora_inicio, '%H:%i') AS hora_inicio_format,
+    DATE_FORMAT(reservas.hora_fin, '%H:%i') AS hora_fin_format,
+    reservas.cantidad_sillas,
+    reservas.sala_id
+FROM reservas
+INNER JOIN usuarios ON reservas.usuario_id = usuarios.id;");
 $stmt_admin->execute();
 $result_admin = $stmt_admin->get_result();
 $reservas = [];

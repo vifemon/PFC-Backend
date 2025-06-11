@@ -29,7 +29,7 @@ if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $fecha)) {
 
 $bloques = [];
 $hora_inicio = new DateTime("08:00");
-$hora_fin_total = new DateTime("20:00");
+$hora_fin_total = new DateTime("22:00");
 $intervalo = new DateInterval("PT60M"); 
 
 while ($hora_inicio < $hora_fin_total) {
